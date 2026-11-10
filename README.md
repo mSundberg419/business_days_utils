@@ -43,3 +43,10 @@ non-business days and listing them again changes nothing.
 
 - `count_business_days` with `start > end` returns the negative of the
 reversed count, so signed durations work without branching.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
